@@ -132,7 +132,7 @@ class InfoPanel extends Panel {
     this.container.classList.add('z-depth-3');
   }
   setContent() {
-    const main = document.querySelector('#' + this.id).parentElement;
+    const main = this.container.parentElement;
     const data = main.querySelector('data');
     var ul = null;
     for (let child of data.children) {
@@ -228,17 +228,17 @@ class InfoPanel extends Panel {
 
 var counter = 0;
 
-class CompanyMap extends HTMLElement {
+class LocationMap extends HTMLElement {
   constructor(a) {
     super();
   }
   resizer() {
-    var resizer = window.setInterval(() => {
+    this.interval = window.setInterval(() => {
       this.map.leaflet.invalidateSize();
       this.map.leaflet.panTo(this.map.params.view.center);
       counter += 1;
       if (counter > 250) {
-        window.clearInterval(resizer);
+        window.clearInterval(this.interval);
         counter = 0;
       }
     }, 1);
@@ -302,4 +302,4 @@ class CompanyMap extends HTMLElement {
   }
 }
 
-window.customElements.define('location-map', CompanyMap);
+window.customElements.define('location-map', LocationMap);
