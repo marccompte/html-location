@@ -64,7 +64,7 @@ leaflet-location-component.min.css
 
 ### Explanation
 
-The JavaScript we add on the top creates a custom Web Component. This means it creates a new HTML tag that has its own UI and behavior. The new tag is:
+The JavaScript we add on the top creates a custom Web Component. This means it creates a new HTML object that has its own UI and behavior. The new tag is:
 ```
 <simple-html-map></simple-html-map>
 ```
@@ -115,8 +115,12 @@ In addition to those, another object `<data>` must be included inside the simple
 
 ### Improve HTMLElement interface (more tag attributes/childs)
 
-- data-panel-position: right, left, top, bottom, popup?.
-- data-marker-icon: image or a material icon?.
-- data-auto-open: Auto open info panel on component visible (on scroll).
-- data-basemap: Basemap alternatives.
+- **data-panel-position**: right, left, top, bottom, popup?.
+- **data-marker-icon**: image or a material icon?.
+- **data-auto-open**: Auto open info panel on component visible (on scroll).
+- **data-basemap**: Basemap alternatives.
+
+### Others
+
 - Make a highly customizable info panel.
+- Extend it for other purposes.
