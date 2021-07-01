@@ -244,8 +244,7 @@ class CompanyMap extends HTMLElement {
       'view': {
         'center': [parseFloat(this.getAttribute('data-latitude')), parseFloat(this.getAttribute('data-longitude'))],
         'zoom': this.getAttribute('data-zoom')
-      },
-      'autoopen': this.getAttribute('data-autoopen')
+      }
     });
     var button = document.createElement('a');
     var icon = 'arrow_forward_ios';
