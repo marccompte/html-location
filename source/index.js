@@ -140,8 +140,10 @@ class InfoPanel extends Panel {
   init(params) {
   }
   openPopup(event) {
-    var icon = event.target;
-    L.DomEvent.disableClickPropagation(icon);
+    if (event) {
+      var icon = event.target;
+      L.DomEvent.disableClickPropagation(icon);
+    }
     this.parent.resizer();
     this.container.parentElement.classList.add('active');
     window.setTimeout(() => {
@@ -181,7 +183,7 @@ class InfoPanel extends Panel {
         node.classList.add(position);
         tooltip.append(node);
       });
-    }, 200);
+    }, 2);
     var info = this.container.parentElement.querySelector('.info');
     info.classList.add('active');
     info.innerHTML = '';
@@ -235,19 +237,24 @@ class CompanyMap extends HTMLElement {
     // this.shadowRoot.append(wrapper);
   }
   init() {
+    this.watchResize();
+    this.checkResize();
     this.map.init({
       'basemap': this.getAttribute('data-basemap'),
       'view': {
         'center': [parseFloat(this.getAttribute('data-latitude')), parseFloat(this.getAttribute('data-longitude'))],
         'zoom': this.getAttribute('data-zoom')
-      }
+      },
+      'autoopen': this.getAttribute('data-autoopen')
     });
-    this.watchResize();
-    this.checkResize();
     var button = document.createElement('a');
     var icon = 'arrow_forward_ios';
     button.innerHTML = '<a class="close-tab halfway-fab hoverable z-depth-2"><i class="material-icons tooltip"  data-tooltip="Hide" data-position="left"> ' + icon + '</i></a>';
     this.appendChild(button.querySelector('.close-tab'));
+    const autoopen = this.getAttribute('data-autoopen');
+    if (autoopen && autoopen === 'true') {
+      this.info.openPopup();
+    }
   }
   watchResize() {
     window.addEventListener('resize', event => {
