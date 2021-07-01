@@ -2,8 +2,6 @@ import 'materialize-css/dist/css/materialize.min.css';
 import 'materialize-css/dist/js/materialize.min';
 import 'material-icons/iconfont/material-icons.scss';
 import './styles.scss';
-import 'leaflet-providers';
-import {v4 as uuidv4} from 'uuid';
 var L = require('leaflet');
 
 const KEY = '04cbc75c-2a5a-405c-8d4a-1f353e7f50b9';
@@ -55,7 +53,9 @@ class MapPanel extends Panel {
     this.params = params;
     const map_properties = {minZoom: 1};
     this.leaflet = L.map(this.id, map_properties);
-    L.tileLayer.provider('CartoDB.Voyager').addTo(this.leaflet);
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_labels_under/{z}/{x}/{y}.png', {
+        attribution: '©<a href="https://openstreetmap.org/ target="_blank"">OpenStreetMap</a> contributors, ©<a href="https://carto.com/" target="_blank">Carto</a>'
+    }).addTo(this.leaflet);
     this.leaflet.setView(params.view.center, params.view.zoom);
 
     var myIcon = L.divIcon({
