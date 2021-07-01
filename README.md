@@ -32,12 +32,12 @@ It uses Leaflet as a map framework and MaterializeCSS as a UI framework. Both ar
 
 ## Install on production server
 
-1. At the development server, build the compiled files:
+1. At the development environment, build the compiled files:
 `npm run build`
-2. Go to the directory dist and copy the following files to your server:
+2. Go to the directory `dist` and copy the following files to your server:
 ```
 leaflet-location-component.min.js
-leaflet.css
+leaflet-location-component.min.css
 ```
 3. Edit the HTML page where you want to show the map and put the JavaScript file and the CSSs on the head section:
 ```
