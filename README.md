@@ -2,7 +2,7 @@
 
 Defines a single point location HTML Web Component. The component draws a map using Leaflet and centers its view in a point marker. When clicking the point marker a panel slides in to show additional data about this point.
 
-Intended for use as the traditional "About us/Contact" map in a business website.
+Intended for use as the traditional "About us/Contact" map in a business or organization website.
 
 ## Features
 
@@ -13,11 +13,13 @@ Intended for use as the traditional "About us/Contact" map in a business website
 
 ## Dependencies
 
-The component integrates Leaflet JS, but you do need to manually add its stylesheet to your HTML.
+The component integrates Leaflet JS, but you still need to manually add its stylesheet to your HTML.
+
+`<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />`
 
 ## Software used
 
-It uses Leaflet as a map framework and MaterializeCSS as a UI framework. Both are minimized and integrated into the final JavaScript bundle.
+It uses Leaflet as a map framework and MaterializeCSS as a UI framework. Both are integrated into the final JavaScript bundle.
 
 ## Development environment
 
@@ -37,9 +39,11 @@ It uses Leaflet as a map framework and MaterializeCSS as a UI framework. Both ar
 leaflet-location-component.min.js
 leaflet.css
 ```
-3. Edit the HTML page where you want to show the map and put the JavaScript file on the head section:
+3. Edit the HTML page where you want to show the map and put the JavaScript file and the CSSs on the head section:
 ```
 <head>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="leaflet-location-component.min.css" />
     <script src="leaflet-location-component.min.js"></script>
 ```
 4. Go the to place in the HTML body where you want to embed the map and add a new component:
@@ -47,7 +51,7 @@ leaflet.css
 ```
 <simple-html-map
     data-longitude="2.827728" data-latitude="41.985081" data-zoom="14"
-    style="width: 895px; height: 600px;">
+    style="width: 100%; height: 100%;">
   <data>
     <title>Girona</title>
     <content><em>This is our headquarters!</em></content>
@@ -71,8 +75,8 @@ This tag has its own attributes and childs that will provide the required input 
 
 There are four required attributes:
 
-- data-longitude and data-latitude are the center of the initial view and the place where the marker will be plotted
-- data-zoom is the level of zoom we want to use on the initial view.
+- **data-longitude** and **data-latitude** are the center of the initial view and the place where the marker will be plotted
+- **data-zoom** is the level of zoom we want to use on the initial view.
 - We also need to set its dimensions, this can be done with standard CSS.
 
 ```
@@ -106,7 +110,7 @@ In addition to those, another object `<data>` must be included inside the simple
 
 ### Improve performance
 
-- Minimize CSS used from MaterializeCSS
+- ~~Minimize CSS used from MaterializeCSS~~
 - ~~Remove Leaflet providers dependency~~
 
 ### Improve HTMLElement interface (more tag attributes/childs)
@@ -115,3 +119,4 @@ In addition to those, another object `<data>` must be included inside the simple
 - data-marker-icon: image or a material icon?.
 - data-auto-open: Auto open info panel on component visible (on scroll).
 - data-basemap: Basemap alternatives.
+- Make a highly customizable info panel.
