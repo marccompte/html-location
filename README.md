@@ -1,4 +1,4 @@
-# leaflet-location-component
+# html-location Web Component
 
 Defines a single point location HTML Web Component. The component draws a map using Leaflet and centers its view in a point marker. When clicking the point marker a panel slides in to show additional data about this point.
 
@@ -10,6 +10,7 @@ Intended for use as the traditional "About us/Contact" map in a business or orga
 - Material Design based UI.
 - Transitional animations to improve UX.
 - Responsive both to the screen size and component size.
+- Different base map styles to choose from.
 
 ## Dependencies
 
@@ -49,7 +50,7 @@ leaflet-location-component.min.css
 4. Go the to place in the HTML body where you want to embed the map and add a new component:
 
 ```
-<simple-html-map
+<location-map
     data-longitude="2.827728" data-latitude="41.985081" data-zoom="14"
     style="width: 100%; height: 100%;">
   <data>
@@ -59,19 +60,19 @@ leaflet-location-component.min.css
     <phone>+34 888888888</phone>
     <email>someone@example.com</email>
   </data>
-</simple-html-map>
+</location-map>
 ```
 
 ### Explanation
 
 The JavaScript we add on the top creates a custom Web Component. This means it creates a new HTML object that has its own UI and behavior. The new tag is:
 ```
-<simple-html-map></simple-html-map>
+<location-map></location-map>
 ```
 
 This tag has its own attributes and childs that will provide the required input data to customize it.
 
-#### SIMPLE-HTML-MAP attributes
+#### location-map attributes
 
 There are four required attributes:
 
@@ -80,16 +81,20 @@ There are four required attributes:
 - We also need to set its dimensions, this can be done with standard CSS.
 
 ```
-<simple-html-map
+<location-map
     data-longitude="2.827728" data-latitude="41.985081" data-zoom="14"
     style="width: 895px; height: 600px;">
-</simple-html-map>
+</location-map>
 ```
 
-In addition to those, another object `<data>` must be included inside the simple-html-map tag. This object includes the data we want to show about that location:
+There is also an optional attribute:
+
+- **data-basemap** to choose a different basemap style. *Options available: osm.streets, osm.topo, carto.streets, carto.bright, carto.dark.*
+
+In addition to those, another object `<data>` must be included inside the location-map tag. This object includes the data we want to show about that location:
 
 ```
-<simple-html-map
+<location-map
     data-longitude="2.827728" data-latitude="41.985081" data-zoom="14"
     style="width: 895px; height: 600px;">
   <data>
@@ -99,7 +104,7 @@ In addition to those, another object `<data>` must be included inside the simple
     <phone>+34 888888888</phone>
     <email>someone@example.com</email>
   </data>
-</simple-html-map>
+</location-map>
 ```
 
 ## Future
@@ -107,6 +112,8 @@ In addition to those, another object `<data>` must be included inside the simple
 ### Improve documentation
 
 - Make a proper REFERENCE.md file with all the attributes required and optional.
+- Add screenshots.
+- Make a demo on GitHub pages.
 
 ### Improve performance
 
@@ -115,10 +122,11 @@ In addition to those, another object `<data>` must be included inside the simple
 
 ### Improve HTMLElement interface (more tag attributes/childs)
 
-- **data-panel-position**: right, left, top, bottom, popup?.
-- **data-marker-icon**: image or a material icon?.
 - **data-auto-open**: Auto open info panel on component visible (on scroll).
-- **data-basemap**: Basemap alternatives.
+- ~~**data-basemap**: Basemap alternatives.~~
+- **data-marker-icon**: image or a material icon?.
+- **data-panel-position**: right, left, top, bottom, popup?.
+- **data-color-scheme**: set up a color scheme (need to refactor all styling into JS?)
 
 ### Others
 

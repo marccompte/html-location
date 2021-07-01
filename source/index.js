@@ -1,4 +1,4 @@
-import 'materialize-css/dist/css/materialize.min.css';
+import './materialize.min.css';
 import 'materialize-css/dist/js/materialize.min';
 import 'material-icons/iconfont/material-icons.scss';
 import './styles.scss';
@@ -48,14 +48,12 @@ class MapPanel extends Panel {
   constructor(className, parent) {
     super(className, parent);
   }
-
   init(params) {
     this.params = params;
     const map_properties = {minZoom: 1};
     this.leaflet = L.map(this.id, map_properties);
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_labels_under/{z}/{x}/{y}.png', {
-        attribution: '©<a href="https://openstreetmap.org/ target="_blank"">OpenStreetMap</a> contributors, ©<a href="https://carto.com/" target="_blank">Carto</a>'
-    }).addTo(this.leaflet);
+    const basemap = this.getBaseMap(this.params.basemap);
+    if (basemap) basemap.addTo(this.leaflet);
     this.leaflet.setView(params.view.center, params.view.zoom);
 
     var myIcon = L.divIcon({
@@ -63,7 +61,6 @@ class MapPanel extends Panel {
       html: '<div><span class="material-icons">business</span></div>',
       iconSize: [ICON_SIZE, ICON_SIZE],
       iconAnchor: [ICON_SIZE / 2, ICON_SIZE],
-      titol: 'HGola'
     });
     var myMarker = L.marker(params.view.center, {icon: myIcon}).addTo(this.leaflet);
     this.container.querySelectorAll('.location-icon').forEach(icon => {
@@ -77,6 +74,60 @@ class MapPanel extends Panel {
     });
 
     this.parent.resizer();
+  }
+  getBaseMap(code) {
+    if (!code) code = 'carto.streets';
+    const parts = code.split('.');
+    if (parts[0].toLowerCase() === 'carto') {
+      var slug;
+      switch (parts[1]) {
+        case 'streets':
+          slug = 'voyager_labels_under'; break;
+        case 'bright':
+          slug = 'light_all'; break;
+        case 'dark':
+          slug = 'dark_all'; break;
+        default:
+          slug = 'voyager_labels_under'; break;
+      }
+      return L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/' + slug + '/{z}/{x}/{y}.png', {
+          attribution: '©<a href="https://openstreetmap.org/ target="_blank"">OpenStreetMap</a> contributors, ©<a href="https://carto.com/" target="_blank">Carto</a>'
+      })
+    } else if (parts[0].toLowerCase() === 'osm') {
+      var url;
+      switch (parts[1]) {
+        case 'streets':
+          url = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'; break;
+        case 'topo':
+          url = 'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png'; break;
+        default:
+          url = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'; break;
+      }
+      return L.tileLayer(url, {
+          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      });
+    } else if (parts[0].toLowerCase() === 'stamen') {
+      var slug;
+      switch (parts[1]) {
+        case 'bright':
+          slug = 'toner-lite'; break;
+        case 'handdrawn':
+          slug = 'watercolor'; break;
+        case 'terrain':
+          slug = 'terrain'; break;
+        default:
+          slug = 'terrain'; break;
+      }
+      return L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/' + slug + '/{z}/{x}/{y}{r}.{ext}', {
+      	attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      	subdomains: 'abcd',
+      	minZoom: 0,
+      	maxZoom: 20,
+      	ext: 'png'
+      });
+    } else {
+      return false;
+    }
   }
 }
 
@@ -218,20 +269,9 @@ class CompanyMap extends HTMLElement {
     }
   }
   connectedCallback() {
-    // Load web component child nodes
-    // var observer = new MutationObserver(mutations => {
-    //   mutations.forEach(mutation => {
-    //     if (mutation.addedNodes.length) {
-    //       mutation.addedNodes.forEach(node => {
-    //         if (node.nodeType !== 3) console.info('Node added: ', node);
-    //       })
-    //     }
-    //   })
-    // });
-    // observer.observe(this, { childList: true })
     this.buildUI();
     this.init();
   }
 }
 
-window.customElements.define('simple-html-map', CompanyMap);
+window.customElements.define('location-map', CompanyMap);

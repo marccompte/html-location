@@ -7,15 +7,15 @@
 // $neutral-light: #cacaca;
 // $icon-size: 42px;
 // $arrow-size: 14px;
-@import 'themes/default.scss';
-// @import 'themes/white.scss';
 @import 'themes/dark.scss';
+// @import 'themes/default.scss';
+// @import 'themes/white.scss';
 // @import 'themes/blue.scss';
-// @import 'themes/light-blue.scss';
 // @import 'themes/microdisseny.scss';
+// @import 'themes/light-blue.scss';
 
 
-simple-html-map.active {
+location-map.active {
   grid-template-columns: 100% auto;
   transition: .3s all;
   .map {
@@ -53,7 +53,7 @@ simple-html-map.active {
   }
 }
 
-simple-html-map {
+location-map {
   display: block;
   border: 2px solid $neutral-light;
   transition: .3s all;
@@ -169,6 +169,7 @@ simple-html-map {
   .card .card-image .card-title {
     padding: 5px 10px;
     background: transparentize($darkest-color, .4);
+    color: $contrast-color;
     font-size: 2.6em;
   }
   .card {
