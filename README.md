@@ -122,7 +122,7 @@ In addition to those, another object `<data>` must be included inside the locati
 
 ### Improve HTMLElement interface (more tag attributes/childs)
 
-- **data-autoopen**: Auto open info panel on component visible (on scroll).
+- ~~**data-autoopen**: Auto open info panel on component visible (on scroll).~~
 - ~~**data-basemap**: Basemap alternatives.~~
 - **data-marker-icon**: image or a material icon?.
 - **data-panel-position**: right, left, top, bottom, popup?.
