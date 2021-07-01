@@ -127,6 +127,7 @@ In addition to those, another object `<data>` must be included inside the locati
 - **data-marker-icon**: image or a material icon?.
 - **data-panel-position**: right, left, top, bottom, popup?.
 - **data-color-scheme**: set up a color scheme (need to refactor all styling into JS?)
+- **data-popup-on-view**: open the popup info window when the component scrolls into view.
 
 ### Others
 

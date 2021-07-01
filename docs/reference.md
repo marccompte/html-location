@@ -40,9 +40,10 @@ location-map#my_id {
 
 #### data-basemap
 
-Indicate the type of basemap to use (*defaults to carto.streets*). Possible options are:
+Indicate the type of basemap to use (defaults to *carto.streets*).
 
-*carto.streets, carto.bright, carto.dark, osm.streets, osm.topo, stamen.bright, stamen.handdrawn, stamen.terrain*
+*Possible options are:
+carto.streets, carto.bright, carto.dark, osm.streets, osm.topo, stamen.bright, stamen.handdrawn, stamen.terrain*
 
 ```
 <location-map data-basemap="stamen.terrain"
@@ -53,7 +54,10 @@ Indicate the type of basemap to use (*defaults to carto.streets*). Possible opti
 
 #### data-autoopen
 
-Set it to true to open the info popup automatically when loading the map. *Defaults to false*.
+Set it to true (defaults to *false*) to open the info popup automatically when loading the map.
+
+*Possible options are:
+true, false*
 
 ```
 <location-map data-autoopen="true"
