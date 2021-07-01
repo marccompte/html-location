@@ -1,16 +1,17 @@
 {
-  "name": "leaflet-company-map",
+  "name": "leaflet-location-component",
   "version": "0.1.0",
   "description": "Leaflet company map",
   "source": "src/index.js",
-  "main": "dist/leaflet-company-map.js",
-  "module": "dist/leaflet-company-map.modern.js",
+  "main": "dist/leaflet-location-component.js",
+  "module": "dist/leaflet-location-component.modern.js",
   "scripts": {
     "prepare": "npm run build",
+    "buildpack": "webpack --config webpack.config.js --optimization-minimize",
     "build": "npm run build:1 && npm run build:2 && npm run build:3",
-    "build:1": "microbundle --no-pkg-main --entry source/index.js --format iife --globals leaflet=L --output dist/leaflet-company-map.js --no-compress",
-    "build:2": "microbundle --no-pkg-main --entry source/index.js --format iife --globals leaflet=L --output dist/leaflet-company-map.min.js",
-    "build:3": "microbundle --no-pkg-main --entry source/index.js --format modern --output dist/leaflet-company-map.modern.js --no-compress",
+    "build:1": "microbundle --no-pkg-main --entry source/index.js --format iife --globals leaflet=L --output dist/leaflet-location-component.js --no-compress",
+    "build:2": "microbundle --no-pkg-main --entry source/index.js --format iife --globals leaflet=L --output dist/leaflet-location-component.min.js",
+    "build:3": "microbundle --no-pkg-main --entry source/index.js --format modern --output dist/leaflet-location-component.modern.js --no-compress",
     "build:demo": "npm run build:demo-esbuild && npm run build:demo-rollup && npm run build:demo-webpack",
     "build:demo-esbuild": "cd demo-esbuild && npm install && npm run build",
     "build:demo-rollup": "cd demo-rollup && npm install && npm run build",
@@ -24,7 +25,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/marccompte/leaflet-company-map.git"
+    "url": "git://github.com/marccompte/leaflet-location-component.git"
   },
   "files": [
     "LICENCE",
@@ -43,35 +44,40 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/marccompte/leaflet-company-map/issues"
+    "url": "https://github.com/marccompte/leaflet-location-component/issues"
   },
   "devDependencies": {
     "@types/leaflet": "^1.5.12",
     "@typescript-eslint/eslint-plugin": "^4.8.1",
     "@typescript-eslint/parser": "^4.8.1",
     "conventional-changelog-cli": "^2.1.0",
+    "css-loader": "^5.2.0",
+    "css-minimizer-webpack-plugin": "^3.0.2",
     "eslint": "^6.8.0",
     "eslint-plugin-prettier": "^3.1.2",
+    "file-loader": "^6.2.0",
+    "javascript-obfuscator": "^2.15.5",
     "jest": "^26.6.3",
     "leaflet": "^1.6.0",
+    "material-icons": "^0.5.4",
+    "materialize-css": "^1.0.0-rc.2",
     "microbundle": "^0.12.4",
+    "mini-css-extract-plugin": "^2.0.0",
     "prettier": "^1.19.1",
+    "purgecss-webpack-plugin": "^4.0.3",
+    "sass": "^1.32.8",
+    "sass-loader": "^11.0.1",
+    "style-loader": "^2.0.0",
     "ts-jest": "^26.4.4",
     "tslib": "^1.11.1",
     "typedoc": "^0.19.2",
     "typescript": "^3.8.3",
-    "css-loader": "^5.2.0",
-    "file-loader": "^6.2.0",
-    "material-icons": "^0.5.4",
-    "materialize-css": "^1.0.0-rc.2",
-    "sass": "^1.32.8",
-    "sass-loader": "^11.0.1",
-    "style-loader": "^2.0.0",
     "url-loader": "^4.1.1",
     "webpack": "^5.30.0",
     "webpack-cli": "^4.6.0",
     "webpack-dev-server": "^3.11.2",
-    "webpack-fix-style-only-entries": "^0.6.1"
+    "webpack-fix-style-only-entries": "^0.6.1",
+    "webpack-obfuscator": "^3.3.2"
   },
   "peerDependencies": {
     "leaflet": "^1.6.0"
