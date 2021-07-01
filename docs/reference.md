@@ -36,6 +36,23 @@ location-map#my_id {
 </style>
 ```
 
+In addition to those, another object `<data>` must be included inside the location-map tag. This object includes the data we want to show about that location. Full example:
+
+```
+<location-map
+    data-longitude="2.827728" data-latitude="41.985081" data-zoom="14"
+    style="width: 895px; height: 600px;">
+  <data>
+    <title>Girona</title>
+    <img src="location-image.jpg">
+    <content><em>This is our headquarters!</em></content>
+    <address>Plaça Ferrater i Mora 1, 17004</address>
+    <phone>+34 888888888</phone>
+    <email>someone@example.com</email>
+  </data>
+</location-map>
+```
+
 ### Optional
 
 #### data-basemap

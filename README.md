@@ -11,6 +11,7 @@ Intended for use as the traditional "About us/Contact" map in a business or orga
 - Transitional animations to improve UX.
 - Responsive both to the screen size and component size.
 - Different base map styles to choose from.
+- Option to auto-open info window on loading.
 
 ## Dependencies
 
@@ -63,49 +64,12 @@ leaflet-location-component.min.css
 </location-map>
 ```
 
-### Explanation
-
 The JavaScript we add on the top creates a custom Web Component. This means it creates a new HTML object that has its own UI and behavior. The new tag is:
 ```
 <location-map></location-map>
 ```
 
-This tag has its own attributes and childs that will provide the required input data to customize it.
-
-#### location-map attributes
-
-There are four required attributes:
-
-- **data-longitude** and **data-latitude** are the center of the initial view and the place where the marker will be plotted
-- **data-zoom** is the level of zoom we want to use on the initial view.
-- We also need to set its dimensions, this can be done with standard CSS.
-
-```
-<location-map
-    data-longitude="2.827728" data-latitude="41.985081" data-zoom="14"
-    style="width: 895px; height: 600px;">
-</location-map>
-```
-
-There is also an optional attribute:
-
-- **data-basemap** to choose a different basemap style. *Options available: osm.streets, osm.topo, carto.streets, carto.bright, carto.dark.*
-
-In addition to those, another object `<data>` must be included inside the location-map tag. This object includes the data we want to show about that location:
-
-```
-<location-map
-    data-longitude="2.827728" data-latitude="41.985081" data-zoom="14"
-    style="width: 895px; height: 600px;">
-  <data>
-    <title>Girona</title>
-    <content><em>This is our headquarters!</em></content>
-    <address>Plaça Ferrater i Mora 1, 17004</address>
-    <phone>+34 888888888</phone>
-    <email>someone@example.com</email>
-  </data>
-</location-map>
-```
+This tag has its own attributes and childs that will provide the required input data to customize it. Check the reference.md file in the docs.
 
 ## Future
 
