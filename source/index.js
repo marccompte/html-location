@@ -57,15 +57,15 @@ class MapPanel extends Panel {
     var myMarker = L.marker(params.view.center, {icon: myIcon}).addTo(this.leaflet);
     this.container.querySelectorAll('.location-icon').forEach(icon => {
       icon.addEventListener('pointerup', event => {
-        this.parent.info.openPopup(event);
+        this.parent.info.open(event);
       });
     });
 
     this.leaflet.on('click', event => {
-      this.parent.info.closePopup();
+      this.parent.info.close();
     });
 
-    this.parent.resizer();
+    this.parent._resizer();
   }
   getBaseMap(code) {
     if (!code) code = 'carto.streets';
@@ -131,7 +131,7 @@ class InfoPanel extends Panel {
     super(className, parent);
     this.container.classList.add('z-depth-3');
   }
-  setContent() {
+  _setContent() {
     const main = this.container.parentElement;
     const data = main.querySelector('data');
     var ul = null;
@@ -182,12 +182,12 @@ class InfoPanel extends Panel {
     }
     main.querySelector('.info .card-content').append(ul);
   }
-  openPopup(event) {
+  open(event) {
     if (event) {
       var icon = event.target;
       L.DomEvent.disableClickPropagation(icon);
     }
-    this.parent.resizer();
+    this.parent._resizer();
     this.container.parentElement.classList.add('active');
     // Set the template
     var info = this.container.parentElement.querySelector('.info');
@@ -196,7 +196,7 @@ class InfoPanel extends Panel {
     var content = template.content.cloneNode(true);
     info.appendChild(content);
 
-    this.setContent();
+    this._setContent();
 
     document.querySelectorAll('.material-tooltip').forEach(tooltip => {
       tooltip.remove();
@@ -213,13 +213,13 @@ class InfoPanel extends Panel {
     });
 
     this.parent.querySelector('.close-tab').addEventListener('pointerup', event => {
-      this.closePopup();
+      this.close();
     });
   }
-  closePopup() {
+  close() {
     window.setTimeout(() => {
       this.container.parentElement.classList.remove('active');
-      this.parent.resizer();
+      this.parent._resizer();
     }, 1);
     var info = this.container.parentElement.querySelector('.info');
     info.classList.remove('active');
@@ -229,17 +229,15 @@ class InfoPanel extends Panel {
 var counter = 0;
 
 class LocationMap extends HTMLElement {
-  constructor(a) {
-    super();
-  }
-  resizer() {
+  _resizer() {
+    this._counter = 0;
     this.interval = window.setInterval(() => {
       this.map.leaflet.invalidateSize();
       this.map.leaflet.panTo(this.map.params.view.center);
-      counter += 1;
-      if (counter > 250) {
+      this._counter += 1;
+      if (this._counter > 250) {
         window.clearInterval(this.interval);
-        counter = 0;
+        this._counter = 0;
       }
     }, 1);
   }
@@ -248,19 +246,15 @@ class LocationMap extends HTMLElement {
     // this.attachShadow({mode: 'open'}); // sets and returns 'this.shadowRoot'
     this.info = new InfoPanel('info', this);
     this.map = new MapPanel('map', this);
-    // Create some CSS to apply to the shadow dom
-    // const style = document.createElement('style');
-    // style.textContent = '.wrapper {' +
-    // CSS truncated for brevity
-
     // attach the created elements to the shadow DOM
     this.appendChild(this.map.container);
     this.appendChild(this.info.container);
-    // this.shadowRoot.append(wrapper);
+    // this.shadowRoot.append(this.map.container);
+    // this.shadowRoot.append(this.info.container);
   }
   init() {
-    this.watchResize();
-    this.checkResize();
+    this._watchResize();
+    this._checkResize();
     this.map.init({
       'basemap': this.getAttribute('data-basemap'),
       'view': {
@@ -274,15 +268,15 @@ class LocationMap extends HTMLElement {
     this.appendChild(button.querySelector('.close-tab'));
     const autoopen = this.getAttribute('data-autoopen');
     if (autoopen && autoopen === 'true') {
-      this.info.openPopup();
+      this.info.open();
     }
   }
-  watchResize() {
+  _watchResize() {
     window.addEventListener('resize', event => {
-      this.checkResize();
+      this._checkResize();
     });
   }
-  checkResize() {
+  _checkResize() {
     if (this.offsetWidth <= 450) {
       this.classList.add('mobile');
       this.classList.remove('tablet');
