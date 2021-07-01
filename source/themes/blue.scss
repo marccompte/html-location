@@ -1,0 +1,9 @@
+$main-color: #1A73E8;
+$lighter-color: lighten($main-color, 30%);
+$lightest-color: lighten($main-color, 80%);
+$darkest-color: darken($main-color, 40%);
+$neutral-light: #cacaca;
+$icon-size: 42px;
+$arrow-size: 14px;
+$contrast-color: $lightest-color;
+$icon-border-color: lighten($main-color, 20%);

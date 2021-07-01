@@ -1,0 +1,304 @@
+// $main-color: #F95100;
+// $main-color: #0051F9;
+// $main-color: #00F951;
+// $lighter-color: lighten($main-color, 30%);
+// $lightest-color: lighten($main-color, 80%);
+// $darkest-color: darken($main-color, 40%);
+// $neutral-light: #cacaca;
+// $icon-size: 42px;
+// $arrow-size: 14px;
+@import 'themes/default.scss';
+// @import 'themes/white.scss';
+@import 'themes/dark.scss';
+// @import 'themes/blue.scss';
+// @import 'themes/light-blue.scss';
+// @import 'themes/microdisseny.scss';
+
+
+simple-html-map.active {
+  grid-template-columns: 100% auto;
+  transition: .3s all;
+  .map {
+    width: calc(100% - 350px);
+    transition: .3s all ease-out .3s;
+  }
+  .info {
+    width: 350px;
+    transition: .3s all ease-out .3s;
+    right: 0px;
+    opacity: 1;
+  }
+  .info.open {
+    overflow: auto;
+  }
+  .close-tab {
+    right: 350px;
+    opacity: 1;
+    transition: .3s all ease-out .3s;
+  }
+  &.mobile .map {
+    width: 0%;
+  }
+  &.tablet .map {
+    width: 45%;
+  }
+  &.tablet .close-tab {
+    right: 55%;
+  }
+  &.mobile .info {
+    width: 100%;
+  }
+  &.tablet .info {
+    width: 55%;
+  }
+}
+
+simple-html-map {
+  display: block;
+  border: 2px solid $neutral-light;
+  transition: .3s all;
+  display: grid;
+  grid-template-columns: 100% auto;
+  position: relative;
+  overflow: hidden;
+
+  .map {
+    width: 100%;
+    height: 100%;
+    transition: .3s all ease-out .3s;
+  }
+  .leaflet-control-zoom.leaflet-control.leaflet-bar {
+    border: 2px solid transparent;
+    margin: 4px;
+  }
+  .leaflet-control-zoom.leaflet-control.leaflet-bar a {
+    background: darken($main-color, 5%);
+    color: $lightest-color;
+    height: 42px;
+    width: 42px;
+    text-align: center;
+    line-height: 42px;
+  }
+  .leaflet-control-zoom.leaflet-control.leaflet-bar a:hover {
+    background: darken($main-color, 0%);
+    color: $lightest-color;
+  }
+  .leaflet-control-zoom a:hover {
+    color: $main-color;
+    background: $lightest-color;
+  }
+  data, location {
+    display: none;
+  }
+  .location-icon > div span {
+    width: $icon-size;
+    height: $icon-size;
+    background: $main-color;
+    border: 2px solid $icon-border-color;
+    border-radius: 4px;
+    position: relative;
+    transition: .3s all;
+    z-index: 1;
+  }
+  .location-icon > div {
+    transform: scale(1);
+    transition: .3s all;
+  }
+  .location-icon > div:hover {
+    transform: scale(1.2);
+    transition: .3s all;
+  }
+  .location-icon > div:after {
+    content: '';
+    border: $arrow-size solid transparent;
+    border-top-color: $icon-border-color;
+    position: absolute;
+    bottom: -24px;
+    left: 9px;
+    z-index: 0;
+  }
+  .location-icon > div .material-icons {
+    line-height: 42px;
+    width: 42px;
+    text-align: center;
+    color: $lightest-color;
+  }
+  .info {
+    width: 350px;
+    transition: .3s all ease-out .3s;
+    right: -350px;
+    position: absolute;
+    height: 100%;
+    z-index: 999;
+    background: $main-color;
+    opacity: 0;
+    z-index: 1000;
+    overflow: hidden;
+  }
+  &.tablet .info {
+    width: 55%;
+  }
+  &.mobile .info {
+    width: 100%;
+  }
+  &.mobile .close-tab {
+    // background: $lightest-color;
+    // color: $main-color;
+    top: 5px;
+    right: 5px;
+    bottom: auto;
+    left: auto;
+    top: 10px;
+    transition: .3s all ease-out .3s;
+  }
+  .close-tab {
+    cursor: pointer;
+    background: $lightest-color;
+    color: $main-color;
+    top: 5px;
+    right: 0px;
+    width: 30px;
+    text-align: center;
+    z-index: 1000;
+    transition: .3s all ease-out .3s;
+    opacity: 0;
+    position: absolute;
+    border: 1px solid darken($lightest-color, 5%);
+    padding: 10px 2px;
+  }
+  .card .card-image .card-title {
+    padding: 5px 10px;
+    background: transparentize($darkest-color, .4);
+    font-size: 2.6em;
+  }
+  .card {
+    margin: 0;
+    min-height: 100%;
+    background: $main-color;
+    color: $lighter-color;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif
+  }
+  .card a {
+    color: $lightest-color;
+  }
+  .card li {
+    padding: 8px 10px 8px;
+    border: 1px solid transparent;
+    color: $lightest-color;
+    cursor: pointer;
+    transition: .3s all ease-out;
+    display: block;
+  }
+  .card li.hover:hover {
+    border: 1px solid $lighter-color;
+    transition: .3s all ease-out;
+  }
+  .card li:before {
+    font-family: "Material Icons";
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    display: inline-block;
+    line-height: 24px;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    direction: ltr;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: "liga";
+    vertical-align: bottom;
+    padding-right: 5px;
+    position: relative;
+    top: 2px;
+  }
+  .card li.address:before {
+    content: 'home';
+  }
+  .card li.phone:before {
+    content: 'phone';
+  }
+  .card li.email:before {
+    content: 'email';
+  }
+  /* Tooltip container */
+  .material-tooltip {
+  }
+  .material-tooltip .tooltip-content {
+    margin-top: 9px;
+  }
+
+  .tooltip {
+    position: relative;
+    display: inline-block;
+  }
+
+  /* Tooltip text */
+  .tooltip .tooltiptext {
+    visibility: hidden;
+
+    /* Position the tooltip text */
+    position: absolute;
+    z-index: 1;
+    bottom: 100%;
+    right: 0px;
+    margin-left: -60px;
+
+    /* Fade in tooltip */
+    opacity: 0;
+    transition: .3s all ease-out;
+
+    padding: 10px 20px;
+    margin: 0;
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
+    color: $main-color;
+    background: $lighter-color;
+  }
+
+  .tooltip .tooltiptext.left {
+    top: -6px;
+    left: -60px;
+    right: auto;
+    bottom: auto;
+    font-size: 16px;
+  }
+
+  /* Tooltip arrow */
+  .tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: $lighter-color transparent transparent transparent;
+  }
+
+  /* Show the tooltip text when you mouse over the tooltip container */
+  .tooltip:hover .tooltiptext {
+    border-radius: 6px;
+    visibility: visible;
+    bottom: 125%;
+    opacity: 1;
+    transition: .3s all ease-out;
+    font-size: 16px;
+  }
+  .tooltip:hover .tooltiptext.left {
+    top: -6px;
+    left: -90px;
+    right: auto;
+    bottom: auto;
+  }
+  .tooltip .tooltiptext.left::after {
+    top: calc(50% - 5px);
+    left: auto;
+    right: -10px;
+    margin-left: -5px;
+    border-width: 6px;
+    border-style: solid;
+    border-color: transparent transparent transparent $lighter-color;
+  }
+}
