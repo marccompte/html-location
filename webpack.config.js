@@ -4,7 +4,7 @@ const glob = require('glob');
 const FixStyleOnlyEntriesPlugin = require("webpack-fix-style-only-entries");
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
-const PurgeCSSPlugin = require('purgecss-webpack-plugin');
+// const PurgeCSSPlugin = require('purgecss-webpack-plugin');
 // const WebpackObfuscator = require('webpack-obfuscator');
 
 const PATHS = {
@@ -38,7 +38,7 @@ module.exports = {
   },
   output: {
     filename: 'leaflet-location-component.js',  // output bundle file name
-    path: path.resolve(__dirname, './dist'),  // path to our Django static directory
+    path: path.resolve(__dirname, './dist'),  // path to our dist directory
   },
   module: {
     rules: [

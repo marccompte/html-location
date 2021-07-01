@@ -11,7 +11,7 @@
 // @import 'themes/default.scss';
 // @import 'themes/white.scss';
 // @import 'themes/blue.scss';
-// @import 'themes/microdisseny.scss';
+@import 'themes/microdisseny.scss';
 // @import 'themes/light-blue.scss';
 
 
@@ -171,11 +171,13 @@ location-map {
     border: 1px solid darken($lightest-color, 5%);
     padding: 10px 2px;
   }
-  .card .card-image .card-title {
+  .info .card .card-title {
     padding: 5px 10px;
+    margin: 0px;
     background: transparentize($darkest-color, .4);
     color: $contrast-color;
     font-size: 2.6em;
+    line-height: 1.4em;
   }
   .card {
     margin: 0;
@@ -224,7 +226,7 @@ location-map {
     content: 'home';
   }
   .card li.phone:before {
-    content: 'phone';
+    content: 'phone_android';
   }
   .card li.email:before {
     content: 'email';

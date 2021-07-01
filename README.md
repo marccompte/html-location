@@ -109,9 +109,13 @@ In addition to those, another object `<data>` must be included inside the locati
 
 ## Future
 
+### Improve code
+
+- Converge naming of package, module, class and HTMLElement.
+
 ### Improve documentation
 
-- Make a proper REFERENCE.md file with all the attributes required and optional.
+- ~~Make a proper REFERENCE.md file with all the attributes required and optional.~~
 - Add screenshots.
 - Make a demo on GitHub pages.
 
@@ -124,6 +128,7 @@ In addition to those, another object `<data>` must be included inside the locati
 
 - ~~**data-autoopen**: Auto open info panel on component visible (on scroll).~~
 - ~~**data-basemap**: Basemap alternatives.~~
+- ~~**data.image**: image to show on the info window~~.
 - **data-marker-icon**: image or a material icon?.
 - **data-panel-position**: right, left, top, bottom, popup?.
 - **data-color-scheme**: set up a color scheme (need to refactor all styling into JS?)
@@ -133,3 +138,4 @@ In addition to those, another object `<data>` must be included inside the locati
 
 - Make a highly customizable info panel.
 - Extend it for other purposes.
+- Define a usage metrics system. Tokens, Domains, #seats?

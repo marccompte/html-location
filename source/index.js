@@ -12,17 +12,9 @@ const template = document.createElement('template');
 template.innerHTML = `
      <div class="card">
        <div class="card-image">
-         <img src="ed_lletres.jpg">
          <span class="card-title"></span>
        </div>
-       <div class="card-content">
-         <p class="text"></p>
-         <ul>
-           <li class="address hover tooltip" data-tooltip="Get directions" data-position="top"></li>
-           <li class="phone hover tooltip" data-tooltip="Call us" data-position="top"></li>
-           <li class="email hover tooltip" data-tooltip="Write to us" data-position="top"></li>
-         </ul>
-       </div>
+       <div class="card-content"></div>
      </div>
 `;
 
@@ -92,7 +84,7 @@ class MapPanel extends Panel {
       }
       return L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/' + slug + '/{z}/{x}/{y}.png', {
           attribution: '©<a href="https://openstreetmap.org/ target="_blank"">OpenStreetMap</a> contributors, ©<a href="https://carto.com/" target="_blank">Carto</a>'
-      })
+      });
     } else if (parts[0].toLowerCase() === 'osm') {
       var url;
       switch (parts[1]) {
@@ -126,7 +118,9 @@ class MapPanel extends Panel {
       	ext: 'png'
       });
     } else {
-      return false;
+      return L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_labels_under/{z}/{x}/{y}.png', {
+          attribution: '©<a href="https://openstreetmap.org/ target="_blank"">OpenStreetMap</a> contributors, ©<a href="https://carto.com/" target="_blank">Carto</a>'
+      });
     }
   }
 }
@@ -137,7 +131,56 @@ class InfoPanel extends Panel {
     super(className, parent);
     this.container.classList.add('z-depth-3');
   }
-  init(params) {
+  setContent() {
+    const main = document.querySelector('#' + this.id).parentElement;
+    const data = main.querySelector('data');
+    var ul = null;
+    for (let child of data.children) {
+      if (child.tagName === 'TITLE') {
+        if (!data.querySelector('img')) {
+          main.querySelector('.info .card-image').remove();
+          var title = document.createElement('h1');
+          title.classList.add('card-title');
+          main.querySelector('.info .card').insertBefore(title, main.querySelector('.info .card').childNodes[0]);
+        }
+        main.querySelector('.info .card-title').innerHTML = child.innerText;
+      } else if (child.tagName === 'CONTENT') {
+        var elem = document.createElement('p');
+        elem.classList.add('text');
+        elem.innerText = child.innerText;
+        main.querySelector('.info .card-content').insertBefore(elem, main.querySelector('.info .card-content').childNodes[0]);
+      } else {
+        if (!ul) ul = document.createElement('ul');
+        const li = document.createElement('li');
+        li.classList.add(child.tagName.toLowerCase());
+        li.innerText = child.innerText;
+        li.classList.add('hover');
+        li.classList.add('tooltip');
+        li.setAttribute('data-position', "top");
+        if (child.tagName === 'ADDRESS') {
+          li.setAttribute('data-tooltip', "Get directions");
+          li.addEventListener('pointerup', event => {
+            open('https://www.google.com/maps/dir//' + child.innerText + '/@' + this.parent.getAttribute('data-latitude') + ',' + this.parent.getAttribute('data-longitude'));
+          });
+        } else if (child.tagName === 'PHONE') {
+          li.setAttribute('data-tooltip', "Call us");
+          li.addEventListener('pointerup', event => {
+            location = 'tel:' + child.innerText;
+          });
+        } else if (child.tagName === 'EMAIL') {
+          li.setAttribute('data-tooltip', "Write to us");
+          li.addEventListener('pointerup', event => {
+            open('mailto:' + child.innerText);
+          });
+        } else if (child.tagName === 'IMG') {
+          var elem = document.createElement('img');
+          elem.src = child.src;
+          main.querySelector('.info .card-image').insertBefore(elem, main.querySelector('.info .card-image').childNodes[0]);
+        }
+        if (['ADDRESS', 'PHONE', 'EMAIL'].indexOf(child.tagName) !== -1) ul.append(li);
+      }
+    }
+    main.querySelector('.info .card-content').append(ul);
   }
   openPopup(event) {
     if (event) {
@@ -146,50 +189,29 @@ class InfoPanel extends Panel {
     }
     this.parent.resizer();
     this.container.parentElement.classList.add('active');
-    window.setTimeout(() => {
-      const main = document.querySelector('#' + this.id).parentElement;
-      const data = main.querySelector('data');
-      main.querySelector('.info .card-title').innerHTML = data.querySelector('title').innerText;
-      if (data.querySelector('content') && data.querySelector('content').innerText !== '') {
-        main.querySelector('.info .card-content p.text').innerHTML = data.querySelector('content').innerText;
-      }
-      if (data.querySelector('address') && data.querySelector('address').innerText !== '') {
-        main.querySelector('.info .card li.address').innerHTML = data.querySelector('address').innerText;
-        main.querySelector('.info .card li.address').addEventListener('pointerup', event => {
-          open('https://www.google.com/maps/dir//' + data.querySelector('address').innerText + '/@' + this.parent.getAttribute('data-latitude') + ',' + this.parent.getAttribute('data-longitude'));
-        })
-      }
-      if (data.querySelector('phone') && data.querySelector('phone').innerText !== '') {
-        main.querySelector('.info .card li.phone').innerHTML = `<a target="_blank" href="tel:${data.querySelector('phone').innerText}">${data.querySelector('phone').innerText}</a>`;
-        main.querySelector('.info .card li.phone').addEventListener('pointerup', event => {
-          location = 'tel:' + data.querySelector('phone').innerText;
-        })
-      }
-      if (data.querySelector('email') && data.querySelector('email').innerText !== '') {
-        main.querySelector('.info .card li.email').innerHTML = `<a target="_blank"  href="mailto:${data.querySelector('email').innerText}">${data.querySelector('email').innerText}</a>`;
-        main.querySelector('.info .card li.email').addEventListener('pointerup', event => {
-          open('mailto:' + data.querySelector('email').innerText);
-        });
-      }
-      document.querySelectorAll('.material-tooltip').forEach(tooltip => {
-        tooltip.remove();
-      });
-      M.AutoInit();
-      this.parent.querySelectorAll('.tooltip').forEach(tooltip => {
-        var node = document.createElement('span');
-        node.classList.add('tooltiptext');
-        node.innerText = tooltip.getAttribute('data-tooltip');
-        var position = tooltip.getAttribute('data-position') ? tooltip.getAttribute('data-position') : 'top';
-        node.classList.add(position);
-        tooltip.append(node);
-      });
-    }, 2);
+    // Set the template
     var info = this.container.parentElement.querySelector('.info');
     info.classList.add('active');
     info.innerHTML = '';
     var content = template.content.cloneNode(true);
     info.appendChild(content);
-    // M.AutoInit();
+
+    this.setContent();
+
+    document.querySelectorAll('.material-tooltip').forEach(tooltip => {
+      tooltip.remove();
+    });
+    M.AutoInit();
+
+    this.parent.querySelectorAll('.tooltip').forEach(tooltip => {
+      var node = document.createElement('span');
+      node.classList.add('tooltiptext');
+      node.innerText = tooltip.getAttribute('data-tooltip');
+      var position = tooltip.getAttribute('data-position') ? tooltip.getAttribute('data-position') : 'top';
+      node.classList.add(position);
+      tooltip.append(node);
+    });
+
     this.parent.querySelector('.close-tab').addEventListener('pointerup', event => {
       this.closePopup();
     });
